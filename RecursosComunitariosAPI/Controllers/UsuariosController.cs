@@ -1,104 +1,64 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Data.Contexts;
 using Data.Models;
+using Data.Contexts;
+
 
 namespace RecursosComunitariosAPI.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class UsuariosController : ControllerBase
     {
-        private readonly RecursosDbContext _context;
+            private readonly ApplicationDbContext _context;
 
-        public UsuariosController(RecursosDbContext context)
-        {
-            _context = context;
-        }
-
-        // GET: api/Usuarios
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
-        {
-            return await _context.Usuarios.ToListAsync();
-        }
-
-        // GET: api/Usuarios/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Usuario>> GetUsuario(int id)
-        {
-            var usuario = await _context.Usuarios.FindAsync(id);
-
-            if (usuario == null)
+            public UsuariosController(ApplicationDbContext context)
             {
-                return NotFound();
+                _context = context;
             }
 
-            return usuario;
-        }
-
-        // POST: api/Usuarios
-        [HttpPost]
-        public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
-        {
-            _context.Usuarios.Add(usuario);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetUsuario), new { id = usuario.Id }, usuario);
-        }
-
-        // PUT: api/Usuarios/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsuario(int id, Usuario usuario)
-        {
-            if (id != usuario.Id)
+            [HttpGet]
+            public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
             {
-                return BadRequest();
+                return await _context.Usuarios.ToListAsync();
             }
 
-            _context.Entry(usuario).State = EntityState.Modified;
-
-            try
+            [HttpGet("{id}")]
+            public async Task<ActionResult<Usuario>> GetUsuario(int id)
             {
+                var usuario = await _context.Usuarios.FindAsync(id);
+                if (usuario == null) return NotFound();
+                return usuario;
+            }
+
+            [HttpPost]
+            public async Task<ActionResult<Usuario>> CreateUsuario(Usuario usuario)
+            {
+                _context.Usuarios.Add(usuario);
                 await _context.SaveChangesAsync();
+                return CreatedAtAction(nameof(GetUsuario), new { id = usuario.Id }, usuario);
             }
-            catch (DbUpdateConcurrencyException)
+
+            [HttpPut("{id}")]
+            public async Task<IActionResult> UpdateUsuario(int id, Usuario usuario)
             {
-                if (!UsuarioExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                if (id != usuario.Id) return BadRequest();
+                _context.Entry(usuario).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return NoContent();
             }
 
-            return NoContent();
-        }
-
-        // DELETE: api/Usuarios/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUsuario(int id)
         {
             var usuario = await _context.Usuarios.FindAsync(id);
-            if (usuario == null)
-            {
-                return NotFound();
-            }
+            if (usuario == null) return NotFound();
 
             _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
-
-        private bool UsuarioExists(int id)
-        {
-            return _context.Usuarios.Any(e => e.Id == id);
-        }
+           
+        
     }
 }

@@ -3,28 +3,32 @@ using Data.Contexts; // Asegúrate de importar el espacio de nombres del DbContex
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Agregar servicios a la aplicación.
 builder.Services.AddControllers();
 
-// Agregar DbContext con SQL Server
-builder.Services.AddDbContext<RecursosDbContext>(options =>
+// Agregar DbContext con SQL Server.
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),
-        b => b.MigrationsAssembly("RecursosComunitariosAPI") // Asegura que las migraciones se creen en el proyecto API
+        b => b.MigrationsAssembly("RecursosComunitariosAPI") // Indica el ensamblado para las migraciones
     ));
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Configurar Swagger/OpenAPI para documentar y probar los endpoints.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Configuración del middleware HTTP.
+// Habilitar Swagger solo en el entorno de desarrollo.
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    // Configuración de Swagger UI
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "API de Recursos Comunitarios v1");
+    options.RoutePrefix = string.Empty; // Hace que Swagger esté disponible en la raíz (http://localhost:<puerto>/)
+});
+
 
 app.UseAuthorization();
 
