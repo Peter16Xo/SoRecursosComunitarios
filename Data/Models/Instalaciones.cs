@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Data.Models
@@ -17,5 +18,7 @@ namespace Data.Models
         public string HoraInicio { get; set; }
         public string HoraFin { get; set; }
         public string Disponibilidad { get; set; } // "Disponible", "Reservada", etc.
+        [JsonIgnore]
+        public virtual ICollection<ReservacionInstalaciones> ReservacionInstalaciones { get; set; }
     }
 }

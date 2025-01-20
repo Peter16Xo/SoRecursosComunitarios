@@ -12,11 +12,12 @@ namespace Data.Models
         public int Id { get; set; }
         public int UsuarioId { get; set; }
         public int HerramientaId { get; set; }
-        public string Dia { get; set; }
+        public string Dia { get; set; } 
         public DateTime Fecha { get; set; }
         public string HoraInicio { get; set; }
         public string HoraFin { get; set; }
         public string Disponibilidad { get; set; } // "Reservada", "Finalizada"
+        public virtual Herramientas Herramientas { get; set; }
     }
 
 }

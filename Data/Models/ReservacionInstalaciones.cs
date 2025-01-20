@@ -13,6 +13,7 @@ namespace Data.Models
         public int InstalacionId { get; set; }
         public DateTime Fecha { get; set; }
         public string Disponibilidad { get; set; } // "Reservada", "Finalizada"
+        public virtual Instalaciones Instalaciones { get; set; }
     }
 }
  
