@@ -13,7 +13,7 @@ namespace Data.Models
         public string Ubicacion { get; set; }
         public string Descripcion { get; set; }
         public int Cantidad { get; set; }
-        public string Estado { get; set; } // "Disponible", "Reservada", etc.
+        public string Estado { get; set; } // "Disponible", "Reservada", etc. o algo mas
     }
 
 }
