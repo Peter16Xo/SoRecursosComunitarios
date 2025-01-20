@@ -15,3 +15,4 @@ namespace Data.Models
         public string Disponibilidad { get; set; } // "Reservada", "Finalizada"
     }
 }
+ 

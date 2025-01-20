@@ -16,6 +16,6 @@ namespace Data.Models
         public string Dia { get; set; }
         public string HoraInicio { get; set; }
         public string HoraFin { get; set; }
-        public string Estado { get; set; } // "Disponible", "Reservada", etc.
+        public string Disponibilidad { get; set; } // "Disponible", "Reservada", etc.
     }
 }
