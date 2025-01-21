@@ -18,13 +18,13 @@ namespace RecursosComunitariosAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Herramientas>>> GetHerramientas()
+        public async Task<ActionResult<IEnumerable<Herramienta>>> GetHerramientas()
         {
             return await _context.Herramienta.ToListAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Herramientas>> GetHerramienta(int id)
+        public async Task<ActionResult<Herramienta>> GetHerramienta(int id)
         {
             var herramienta = await _context.Herramienta.FindAsync(id);
             if (herramienta == null) return NotFound();
@@ -32,7 +32,7 @@ namespace RecursosComunitariosAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Herramientas>> CreateHerramienta(Herramientas herramienta)
+        public async Task<ActionResult<Herramienta>> CreateHerramienta(Herramienta herramienta)
         {
             _context.Herramienta.Add(herramienta);
             await _context.SaveChangesAsync();
@@ -40,7 +40,7 @@ namespace RecursosComunitariosAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateHerramienta(int id, Herramientas herramienta)
+        public async Task<IActionResult> UpdateHerramienta(int id, Herramienta herramienta)
         {
             if (id != herramienta.Id) return BadRequest();
             _context.Entry(herramienta).State = EntityState.Modified;

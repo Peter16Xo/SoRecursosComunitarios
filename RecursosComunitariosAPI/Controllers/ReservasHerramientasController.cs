@@ -17,7 +17,7 @@ namespace RecursosComunitariosAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ReservacionHerramientas>>> GetReservasHerramientas()
+        public async Task<ActionResult<IEnumerable<ReservacionHerramienta>>> GetReservasHerramientas()
         {
             return await _context.ReservasHerramientas
                 .Include(r => r.UsuarioId) // Si estas propiedades son navegación, ajusta aquí también
@@ -26,7 +26,7 @@ namespace RecursosComunitariosAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ReservacionHerramientas>> GetReservaHerramienta(int id)
+        public async Task<ActionResult<ReservacionHerramienta>> GetReservaHerramienta(int id)
         {
             var reserva = await _context.ReservasHerramientas
                 .Include(r => r.UsuarioId)
@@ -38,7 +38,7 @@ namespace RecursosComunitariosAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ReservacionHerramientas>> CreateReservaHerramienta(ReservacionHerramientas reserva)
+        public async Task<ActionResult<ReservacionHerramienta>> CreateReservaHerramienta(ReservacionHerramienta reserva)
         {
             _context.ReservasHerramientas.Add(reserva);
             await _context.SaveChangesAsync();
@@ -46,7 +46,7 @@ namespace RecursosComunitariosAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateReservaHerramienta(int id, ReservacionHerramientas reserva)
+        public async Task<IActionResult> UpdateReservaHerramienta(int id, ReservacionHerramienta reserva)
         {
             if (id != reserva.Id) return BadRequest();
             _context.Entry(reserva).State = EntityState.Modified;

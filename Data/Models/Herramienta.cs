@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    public class Herramientas
+    public class Herramienta
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
@@ -16,7 +16,7 @@ namespace Data.Models
         public int Cantidad { get; set; }
         public string Estado { get; set; } // "Disponible", "Reservada", etc. o algo mas
         [JsonIgnore]
-        public virtual ICollection<ReservacionHerramientas> ReservacionHerramientas { get; set; }
+        public virtual ICollection<ReservacionHerramienta> ReservacionHerramientas { get; set; }
     }
 
 }

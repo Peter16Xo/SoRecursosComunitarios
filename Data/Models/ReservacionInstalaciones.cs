@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    public class ReservacionInstalaciones
+    public class ReservacionInstalacion
     {
         public int Id { get; set; }
         public int UsuarioId { get; set; }
         public int InstalacionId { get; set; }
         public DateTime Fecha { get; set; }
         public string Disponibilidad { get; set; } // "Reservada", "Finalizada"
-        public virtual Instalaciones Instalaciones { get; set; }
+        public virtual Instalacion Instalacion { get; set; }
         public virtual Usuario Usuario { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace Data.Models
         public string Apellido { get; set; }
         public string Correo { get; set; }
         public string Telefono { get; set; }
-        public virtual ICollection<ReservacionInstalaciones> ReservacionInstalaciones { get; set; }
-        public virtual ICollection<ReservacionHerramientas> ReservacionHerramientas { get; set; }
+        public virtual ICollection<ReservacionInstalacion> ReservacionInstalaciones { get; set; }
+        public virtual ICollection<ReservacionHerramienta> ReservacionHerramientas { get; set; }
     }
 }

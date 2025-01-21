@@ -12,11 +12,11 @@ namespace Data.Contexts
     public class ApplicationDbContext : DbContext
     {
         public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Herramientas> Herramienta { get; set; }
-        public DbSet<Instalaciones> Instalacion { get; set; }
+        public DbSet<Herramienta> Herramienta { get; set; }
+        public DbSet<Instalacion> Instalacion { get; set; }
         public DbSet<Reportes> Reportes { get; set; }
-        public DbSet<ReservacionHerramientas> ReservasHerramientas { get; set; }
-        public DbSet<ReservacionInstalaciones> ReservasInstalaciones { get; set; }
+        public DbSet<ReservacionHerramienta> ReservasHerramientas { get; set; }
+        public DbSet<ReservacionInstalacion> ReservasInstalaciones { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
@@ -24,29 +24,29 @@ namespace Data.Contexts
         {
             // Configurar relaciones y restricciones
              // Relación Usuario -> ReservasHerramientas (1 a muchos)
-            modelBuilder.Entity<ReservacionHerramientas>()
+            modelBuilder.Entity<ReservacionHerramienta>()
                 .HasOne<Usuario>()
                 .WithMany()
                 .HasForeignKey(r => r.UsuarioId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Relación Herramienta -> ReservasHerramientas (1 a muchos)
-            modelBuilder.Entity<ReservacionHerramientas>()
-                .HasOne<Herramientas>()
+            modelBuilder.Entity<ReservacionHerramienta>()
+                .HasOne<Herramienta>()
                 .WithMany()
                 .HasForeignKey(r => r.HerramientaId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Relación Usuario -> ReservasInstalaciones (1 a muchos)
-            modelBuilder.Entity<ReservacionInstalaciones>()
+            modelBuilder.Entity<ReservacionInstalacion>()
                 .HasOne<Usuario>()
                 .WithMany()
                 .HasForeignKey(r => r.UsuarioId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Relación Instalacion -> ReservasInstalaciones (1 a muchos)
-            modelBuilder.Entity<ReservacionInstalaciones>()
-                .HasOne<Instalaciones>()
+            modelBuilder.Entity<ReservacionInstalacion>()
+                .HasOne<Instalacion>()
                 .WithMany()
                 .HasForeignKey(r => r.InstalacionId)
                 .OnDelete(DeleteBehavior.Restrict);

@@ -17,13 +17,13 @@ namespace RecursosComunitariosAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Instalaciones>>> GetInstalaciones()
+        public async Task<ActionResult<IEnumerable<Instalacion>>> GetInstalaciones()
         {
             return await _context.Instalacion.ToListAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Instalaciones>> GetInstalacion(int id)
+        public async Task<ActionResult<Instalacion>> GetInstalacion(int id)
         {
             var instalacion = await _context.Instalacion.FindAsync(id);
             if (instalacion == null) return NotFound();
@@ -31,7 +31,7 @@ namespace RecursosComunitariosAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Instalaciones>> CreateInstalacion(Instalaciones instalacion)
+        public async Task<ActionResult<Instalacion>> CreateInstalacion(Instalacion instalacion)
         {
             _context.Instalacion.Add(instalacion);
             await _context.SaveChangesAsync();
@@ -39,7 +39,7 @@ namespace RecursosComunitariosAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateInstalacion(int id, Instalaciones instalacion)
+        public async Task<IActionResult> UpdateInstalacion(int id, Instalacion instalacion)
         {
             if (id != instalacion.Id) return BadRequest();
             _context.Entry(instalacion).State = EntityState.Modified;

@@ -17,7 +17,7 @@ namespace RecursosComunitariosAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ReservacionInstalaciones>>> GetReservasInstalaciones()
+        public async Task<ActionResult<IEnumerable<ReservacionInstalacion>>> GetReservasInstalaciones()
         {
             return await _context.ReservasInstalaciones
                 .Include(r => r.UsuarioId)
@@ -26,7 +26,7 @@ namespace RecursosComunitariosAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ReservacionInstalaciones>> GetReservaInstalacion(int id)
+        public async Task<ActionResult<ReservacionInstalacion>> GetReservaInstalacion(int id)
         {
             var reserva = await _context.ReservasInstalaciones
                 .Include(r => r.UsuarioId)
@@ -38,7 +38,7 @@ namespace RecursosComunitariosAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ReservacionInstalaciones>> CreateReservaInstalacion(ReservacionInstalaciones reserva)
+        public async Task<ActionResult<ReservacionInstalacion>> CreateReservaInstalacion(ReservacionInstalacion reserva)
         {
             _context.ReservasInstalaciones.Add(reserva);
             await _context.SaveChangesAsync();
@@ -46,7 +46,7 @@ namespace RecursosComunitariosAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateReservaInstalacion(int id, ReservacionInstalaciones reserva)
+        public async Task<IActionResult> UpdateReservaInstalacion(int id, ReservacionInstalacion reserva)
         {
             if (id != reserva.Id) return BadRequest();
             _context.Entry(reserva).State = EntityState.Modified;
