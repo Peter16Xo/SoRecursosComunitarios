@@ -14,7 +14,7 @@ namespace Data.Contexts
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Herramienta> Herramienta { get; set; }
         public DbSet<Instalacion> Instalacion { get; set; }
-        public DbSet<Reportes> Reportes { get; set; }
+        public DbSet<Reporte> Reportes { get; set; }
         public DbSet<ReservacionHerramienta> ReservasHerramientas { get; set; }
         public DbSet<ReservacionInstalacion> ReservasInstalaciones { get; set; }
 

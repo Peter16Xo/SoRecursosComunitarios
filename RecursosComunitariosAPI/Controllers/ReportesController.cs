@@ -17,13 +17,13 @@ namespace RecursosComunitariosAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Reportes>>> GetReportes()
+        public async Task<ActionResult<IEnumerable<Reporte>>> GetReportes()
         {
             return await _context.Reportes.ToListAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Reportes>> GetReporte(int id)
+        public async Task<ActionResult<Reporte>> GetReporte(int id)
         {
             var reporte = await _context.Reportes.FindAsync(id);
             if (reporte == null) return NotFound();
@@ -31,7 +31,7 @@ namespace RecursosComunitariosAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Reportes>> CreateReporte(Reportes reporte)
+        public async Task<ActionResult<Reporte>> CreateReporte(Reporte reporte)
         {
             _context.Reportes.Add(reporte);
             await _context.SaveChangesAsync();
@@ -39,7 +39,7 @@ namespace RecursosComunitariosAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateReporte(int id, Reportes reporte)
+        public async Task<IActionResult> UpdateReporte(int id, Reporte reporte)
         {
             if (id != reporte.ID) return BadRequest();
             _context.Entry(reporte).State = EntityState.Modified;
