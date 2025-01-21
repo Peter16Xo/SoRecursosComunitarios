@@ -27,28 +27,28 @@ namespace Data.Contexts
             modelBuilder.Entity<ReservacionHerramienta>()
                 .HasOne<Usuario>()
                 .WithMany()
-                .HasForeignKey(r => r.UsuarioId)
+                .HasForeignKey(r => r.Usuario_ID)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Relación Herramienta -> ReservasHerramientas (1 a muchos)
             modelBuilder.Entity<ReservacionHerramienta>()
                 .HasOne<Herramienta>()
                 .WithMany()
-                .HasForeignKey(r => r.HerramientaId)
+                .HasForeignKey(r => r.Herramienta_ID)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Relación Usuario -> ReservasInstalaciones (1 a muchos)
             modelBuilder.Entity<ReservacionInstalacion>()
                 .HasOne<Usuario>()
                 .WithMany()
-                .HasForeignKey(r => r.UsuarioId)
+                .HasForeignKey(r => r.Usuario_ID)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Relación Instalacion -> ReservasInstalaciones (1 a muchos)
             modelBuilder.Entity<ReservacionInstalacion>()
                 .HasOne<Instalacion>()
                 .WithMany()
-                .HasForeignKey(r => r.InstalacionId)
+                .HasForeignKey(r => r.Instalacion_ID)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     

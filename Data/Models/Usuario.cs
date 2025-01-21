@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Data.Models
@@ -14,7 +15,9 @@ namespace Data.Models
         public string Apellido { get; set; }
         public string Correo { get; set; }
         public string Telefono { get; set; }
+        [JsonIgnore]
         public virtual ICollection<ReservacionInstalacion> ReservacionInstalaciones { get; set; }
+        [JsonIgnore]
         public virtual ICollection<ReservacionHerramienta> ReservacionHerramientas { get; set; }
     }
 }

@@ -9,8 +9,8 @@ namespace Data.Models
     public class ReservacionInstalacion
     {
         public int Id { get; set; }
-        public int UsuarioId { get; set; }
-        public int InstalacionId { get; set; }
+        public int Usuario_ID { get; set; }
+        public int Instalacion_ID { get; set; }
         public DateTime Fecha { get; set; }
         public string Disponibilidad { get; set; } // "Reservada", "Finalizada"
         public virtual Instalacion Instalacion { get; set; }

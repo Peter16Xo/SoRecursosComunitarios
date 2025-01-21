@@ -20,8 +20,8 @@ namespace RecursosComunitariosAPI.Controllers
         public async Task<ActionResult<IEnumerable<ReservacionInstalacion>>> GetReservasInstalaciones()
         {
             return await _context.ReservasInstalaciones
-                .Include(r => r.UsuarioId)
-                .Include(r => r.InstalacionId)
+                .Include(r => r.Usuario_ID)
+                .Include(r => r.Instalacion_ID)
                 .ToListAsync();
         }
 
@@ -29,8 +29,8 @@ namespace RecursosComunitariosAPI.Controllers
         public async Task<ActionResult<ReservacionInstalacion>> GetReservaInstalacion(int id)
         {
             var reserva = await _context.ReservasInstalaciones
-                .Include(r => r.UsuarioId)
-                .Include(r => r.InstalacionId)
+                .Include(r => r.Usuario_ID)
+                .Include(r => r.Instalacion_ID)
                 .FirstOrDefaultAsync(r => r.Id == id);
 
             if (reserva == null) return NotFound();
