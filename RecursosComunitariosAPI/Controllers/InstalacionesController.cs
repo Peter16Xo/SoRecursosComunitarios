@@ -35,13 +35,13 @@ namespace RecursosComunitariosAPI.Controllers
         {
             _context.Instalacion.Add(instalacion);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetInstalacion), new { id = instalacion.Id }, instalacion);
+            return CreatedAtAction(nameof(GetInstalacion), new { id = instalacion.ID }, instalacion);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateInstalacion(int id, Instalacion instalacion)
         {
-            if (id != instalacion.Id) return BadRequest();
+            if (id != instalacion.ID) return BadRequest();
             _context.Entry(instalacion).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();

@@ -36,13 +36,13 @@ namespace RecursosComunitariosAPI.Controllers
         {
             _context.Herramienta.Add(herramienta);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetHerramienta), new { id = herramienta.Id }, herramienta);
+            return CreatedAtAction(nameof(GetHerramienta), new { id = herramienta.ID }, herramienta);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateHerramienta(int id, Herramienta herramienta)
         {
-            if (id != herramienta.Id) return BadRequest();
+            if (id != herramienta.ID) return BadRequest();
             _context.Entry(herramienta).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();

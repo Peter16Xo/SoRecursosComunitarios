@@ -9,7 +9,7 @@ namespace Data.Models
 {
     public class Instalacion
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string Nombre { get; set; }
         public string Tipo { get; set; } // "Deportiva", "Recreativa", etc.
         public int Capacidad { get; set; }

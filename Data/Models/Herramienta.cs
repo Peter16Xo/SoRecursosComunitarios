@@ -9,7 +9,7 @@ namespace Data.Models
 {
     public class Herramienta
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string Nombre { get; set; }
         public string Ubicacion { get; set; }
         public string Descripcion { get; set; }
