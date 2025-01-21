@@ -35,13 +35,13 @@ namespace RecursosComunitariosAPI.Controllers
         {
             _context.Reportes.Add(reporte);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetReporte), new { id = reporte.Id }, reporte);
+            return CreatedAtAction(nameof(GetReporte), new { id = reporte.ID }, reporte);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateReporte(int id, Reportes reporte)
         {
-            if (id != reporte.Id) return BadRequest();
+            if (id != reporte.ID) return BadRequest();
             _context.Entry(reporte).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();
