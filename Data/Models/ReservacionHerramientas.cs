@@ -9,7 +9,7 @@ namespace Data.Models
 {
     public class ReservacionHerramienta
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
         public int Usuario_ID { get; set; }
         public int Herramienta_ID { get; set; }
         public string Dia { get; set; } 

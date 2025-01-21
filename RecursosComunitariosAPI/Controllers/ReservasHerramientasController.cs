@@ -31,7 +31,7 @@ namespace RecursosComunitariosAPI.Controllers
             var reserva = await _context.ReservasHerramientas
                 .Include(r => r.Usuario_ID)
                 .Include(r => r.Herramienta_ID)
-                .FirstOrDefaultAsync(r => r.Id == id);
+                .FirstOrDefaultAsync(r => r.ID == id);
 
             if (reserva == null) return NotFound();
             return reserva;
@@ -42,13 +42,13 @@ namespace RecursosComunitariosAPI.Controllers
         {
             _context.ReservasHerramientas.Add(reserva);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetReservaHerramienta), new { id = reserva.Id }, reserva);
+            return CreatedAtAction(nameof(GetReservaHerramienta), new { id = reserva.ID }, reserva);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateReservaHerramienta(int id, ReservacionHerramienta reserva)
         {
-            if (id != reserva.Id) return BadRequest();
+            if (id != reserva.ID) return BadRequest();
             _context.Entry(reserva).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();
