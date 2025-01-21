@@ -14,7 +14,7 @@ namespace Data.Models
         public string Ubicacion { get; set; }
         public string Descripcion { get; set; }
         public int Cantidad { get; set; }
-        public string Estado { get; set; } // "Disponible", "Reservada", etc. o algo mas
+        public string Disponibilidad { get; set; } // "Disponible", "Reservada", etc. o algo mas
         [JsonIgnore]
         public virtual ICollection<ReservacionHerramienta> ReservacionHerramientas { get; set; }
     }
