@@ -14,6 +14,7 @@ namespace Data.Models
         public DateTime Fecha { get; set; }
         public string Disponibilidad { get; set; } // "Reservada", "Finalizada"
         public virtual Instalaciones Instalaciones { get; set; }
+        public virtual Usuario Usuario { get; set; }
     }
 }
  

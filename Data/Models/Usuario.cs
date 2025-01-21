@@ -13,6 +13,8 @@ namespace Data.Models
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Correo { get; set; }
-        public string Telefono { get; set; }  
+        public string Telefono { get; set; }
+        public virtual ICollection<ReservacionInstalaciones> ReservacionInstalaciones { get; set; }
+        public virtual ICollection<ReservacionHerramientas> ReservacionHerramientas { get; set; }
     }
 }
