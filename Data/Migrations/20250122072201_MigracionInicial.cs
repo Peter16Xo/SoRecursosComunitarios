@@ -90,7 +90,7 @@ namespace Data.Migrations
                     Usuario_ID = table.Column<int>(type: "int", nullable: false),
                     Herramienta_ID = table.Column<int>(type: "int", nullable: false),
                     Dia = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Fecha = table.Column<DateOnly>(type: "date", nullable: true),
                     HoraInicio = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     HoraFin = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Disponibilidad = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -120,7 +120,7 @@ namespace Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Usuario_ID = table.Column<int>(type: "int", nullable: false),
                     Instalacion_ID = table.Column<int>(type: "int", nullable: false),
-                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Fecha = table.Column<DateOnly>(type: "date", nullable: true),
                     Disponibilidad = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>

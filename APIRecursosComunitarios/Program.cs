@@ -14,7 +14,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"))
 );
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularAppp",
+        builder => builder.WithOrigins("http://localhost:4200")
+        .AllowAnyMethod().AllowAnyHeader());
+});
 var app = builder.Build();
 // Lo utilizan cuando crean las migraciones
 //using (var scope = app.Services.CreateScope())
@@ -30,7 +35,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowAngularAppp");
 app.UseAuthorization();
 
 app.MapControllers();

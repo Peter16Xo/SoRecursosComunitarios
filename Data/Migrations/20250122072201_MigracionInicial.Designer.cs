@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250122014206_MigracionInicial")]
+    [Migration("20250122072201_MigracionInicial")]
     partial class MigracionInicial
     {
         /// <inheritdoc />
@@ -145,8 +145,8 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly?>("Fecha")
+                        .HasColumnType("date");
 
                     b.Property<int>("Herramienta_ID")
                         .HasColumnType("int");
@@ -183,8 +183,8 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly?>("Fecha")
+                        .HasColumnType("date");
 
                     b.Property<int>("Instalacion_ID")
                         .HasColumnType("int");

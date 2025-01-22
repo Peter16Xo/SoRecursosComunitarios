@@ -25,7 +25,11 @@ namespace APIRecursosComunitarios.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ReservacionInstalacion>>> GetReservasInstalaciones()
         {
-            return await _context.ReservasInstalaciones.ToListAsync();
+            //return await _context.ReservasInstalaciones.ToListAsync();
+            return await _context.ReservasInstalaciones
+                .Include(r => r.Instalacion)
+                .Include(r => r.Usuario)
+                .ToListAsync();
         }
 
         // GET: api/ReservacionInstalacions/5

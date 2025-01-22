@@ -82,7 +82,7 @@ SELECT * FROM Reserva_Herramienta;
 SELECT * FROM Reserva_Instalacion;
 SELECT * FROM Reporte;
 
-INSERT INTO Usuario (Cedula, Nombre, Apellidos, Correo, Telefono)
+INSERT INTO Usuario (Cedula, Nombre, Apellido, Correo, Telefono)
 VALUES ('0102030405', 'Juan', 'Perez', 'juanperez@mail.com', '0987654321'),
        ('0102030406', 'Maria', 'Lopez', 'marialopez@mail.com', '0987654322');
 

@@ -142,8 +142,8 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly?>("Fecha")
+                        .HasColumnType("date");
 
                     b.Property<int>("Herramienta_ID")
                         .HasColumnType("int");
@@ -180,8 +180,8 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly?>("Fecha")
+                        .HasColumnType("date");
 
                     b.Property<int>("Instalacion_ID")
                         .HasColumnType("int");

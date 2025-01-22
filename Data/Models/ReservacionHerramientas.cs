@@ -13,7 +13,7 @@ namespace Data.Models
         public int Usuario_ID { get; set; }
         public int Herramienta_ID { get; set; }
         public string Dia { get; set; } 
-        public DateTime Fecha { get; set; }
+        public DateOnly? Fecha { get; set; }
         public string HoraInicio { get; set; }
         public string HoraFin { get; set; }
         public string Disponibilidad { get; set; } // "Reservada", "Finalizada"
