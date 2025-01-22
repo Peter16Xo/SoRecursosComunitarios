@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Data": {
+      "commandName": "Project",
+      "sqlDebugging": true,
+      "jsWebView2Debugging": true,
+      "remoteDebugEnabled": false
+    }
+  }
+}

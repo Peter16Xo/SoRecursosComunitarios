@@ -1,6 +1,0 @@
-@RecursosComunitariosAPI_HostAddress = http://localhost:5000
-
-GET {{RecursosComunitariosAPI_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
