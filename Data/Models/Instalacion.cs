@@ -19,6 +19,6 @@ namespace Data.Models
         public string HoraFin { get; set; }
         public string Disponibilidad { get; set; } // "Disponible", "Reservada", etc.
         [JsonIgnore]
-        public virtual ICollection<ReservacionInstalacion> ReservacionInstalaciones { get; set; }
+        public virtual ICollection<ReservacionInstalacion> ReservacionInstalaciones { get; set; } = new List<ReservacionInstalacion>();
     }
 }

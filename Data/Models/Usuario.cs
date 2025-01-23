@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    public class Usuario
+    public partial class Usuario
     {
         public int Id { get; set; }
         public string Cedula { get; set; }
@@ -16,8 +16,8 @@ namespace Data.Models
         public string Correo { get; set; }
         public string Telefono { get; set; }
         [JsonIgnore]
-        public virtual ICollection<ReservacionInstalacion> ReservacionInstalaciones { get; set; }
+        public virtual ICollection<ReservacionInstalacion> ReservacionInstalaciones { get; set; } = new List<ReservacionInstalacion>();
         [JsonIgnore]
-        public virtual ICollection<ReservacionHerramienta> ReservacionHerramientas { get; set; }
+        public virtual ICollection<ReservacionHerramienta> ReservacionHerramientas { get; set; } = new List<ReservacionHerramienta>();
     }
 }

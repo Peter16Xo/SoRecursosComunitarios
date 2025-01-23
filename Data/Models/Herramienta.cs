@@ -16,7 +16,7 @@ namespace Data.Models
         public int Cantidad { get; set; }
         public string Disponibilidad { get; set; } // "Disponible", "Reservada", etc. o algo mas
         [JsonIgnore]
-        public virtual ICollection<ReservacionHerramienta> ReservacionHerramientas { get; set; }
+        public virtual ICollection<ReservacionHerramienta> ReservacionHerramientas { get; set; } = new List<ReservacionHerramienta>();
     }
 
 }

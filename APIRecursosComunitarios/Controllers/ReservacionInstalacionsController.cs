@@ -31,7 +31,25 @@ namespace APIRecursosComunitarios.Controllers
                 .Include(r => r.Usuario)
                 .ToListAsync();
         }
-
+        [HttpGet("Instalacion_Reservas")]
+        public async Task<ActionResult<IEnumerable<Object>>> GetInstal_Usu_Reservas()
+        {
+            return await _context.ReservasInstalaciones
+                .Include(r => r.Instalacion)
+                .Include(r => r.Usuario)
+                .Select(static r => new
+                {
+                    r.ID,
+                    Usuario = r.Usuario.Nombre+' '+r.Usuario.Apellido,
+                    Instalacion = r.Instalacion.Nombre,
+                    r.Instalacion.Dia,
+                    r.Instalacion.HoraInicio,
+                    r.Instalacion.HoraFin,
+                    r.Fecha,
+                    r.Disponibilidad,
+                })
+                .ToListAsync();
+        }
         // GET: api/ReservacionInstalacions/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ReservacionInstalacion>> GetReservacionInstalacion(int id)

@@ -30,7 +30,26 @@ namespace APIRecursosComunitarios.Controllers
                 .Include(r=> r.Usuario)
                 .ToListAsync();
         }
-
+        [HttpGet("Herramienta_Reservas")]
+        public async Task<ActionResult<IEnumerable<Object>>> GetHerra_Usu_Reservas()
+        {
+            return await _context.ReservasHerramientas
+                .Include(r => r.Herramienta)
+                .Include(r => r.Usuario)
+                .Select(static r => new
+                {
+                    r.ID,
+                    Usuario = r.Usuario.Nombre + ' ' + r.Usuario.Apellido,
+                    Herramienta = r.Herramienta.Nombre,
+                    r.Herramienta.Descripcion,
+                    r.Dia,
+                    r.Fecha,
+                    r.HoraInicio,
+                    r.HoraFin,
+                    r.Disponibilidad,
+                })
+                .ToListAsync();
+        }
         // GET: api/ReservacionHerramientas/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ReservacionHerramienta>> GetReservacionHerramienta(int id)
