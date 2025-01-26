@@ -124,7 +124,122 @@ namespace APIRecursosComunitarios.Controllers
 
             return NoContent();
         }
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<ReservacionHerramienta>>> SearchReservaHerr(string? nombre, string? apellido, string? instalacion)
+        {
+            var reservaQuery = _context.ReservasHerramientas
+                .Include(r => r.Usuario)
+                .Include(r => r.Herramienta)
+                .AsQueryable();
 
+            // Filtro por nombre
+            if (!string.IsNullOrEmpty(nombre))
+            {
+                reservaQuery = reservaQuery.Where(r =>
+                    r.Usuario.Nombre.Contains(nombre));
+            }
+            if (!string.IsNullOrEmpty(apellido))
+            {
+                reservaQuery = reservaQuery.Where(r =>
+                r.Usuario.Apellido.Contains(apellido));
+            }
+            if (!string.IsNullOrEmpty(instalacion))
+            {
+                reservaQuery = reservaQuery.Where(r =>
+                r.Herramienta.Nombre.Contains(instalacion));
+            }
+
+            // Proyección de los datos
+            var reservas = await reservaQuery
+                .Select(r => new
+                {
+                    r.ID,
+                    Usuario = r.Usuario.Nombre + " " + r.Usuario.Apellido,
+                    Instalacion = r.Herramienta.Nombre,
+                    r.Dia,
+                    r.HoraInicio,
+                    r.HoraFin,
+                    r.Fecha,
+                    r.Disponibilidad,
+                })
+                .ToListAsync();
+
+            // Verificación si no hay resultados
+            if (!reservas.Any())
+            {
+                return NotFound("No se encontraron reservas");
+            }
+
+            return Ok(reservas);
+        }
+        [HttpGet("search_Finalizada")]
+        public async Task<ActionResult<IEnumerable<ReservacionHerramienta>>> SearchReservaHerra_Fin(string? nombre, string? apellido, string? instalacion)
+        {
+            var reservaQuery = _context.ReservasHerramientas
+                .Include(r => r.Usuario)
+                .Include(r => r.Herramienta)
+                .Where(r => r.Disponibilidad == "Finalizada")
+                .AsQueryable();
+
+            // Filtro por nombre
+            if (!string.IsNullOrEmpty(nombre))
+            {
+                reservaQuery = reservaQuery.Where(r =>
+                    r.Usuario.Nombre.Contains(nombre));
+            }
+            if (!string.IsNullOrEmpty(apellido))
+            {
+                reservaQuery = reservaQuery.Where(r =>
+                r.Usuario.Apellido.Contains(apellido));
+            }
+            if (!string.IsNullOrEmpty(instalacion))
+            {
+                reservaQuery = reservaQuery.Where(r =>
+                r.Herramienta.Nombre.Contains(instalacion));
+            }
+
+            // Proyección de los datos
+            var reservas = await reservaQuery
+                .Select(r => new
+                {
+                    r.ID,
+                    Usuario = r.Usuario.Nombre + " " + r.Usuario.Apellido,
+                    Instalacion = r.Herramienta.Nombre,
+                    r.Dia,
+                    r.HoraInicio,
+                    r.HoraFin,
+                    r.Fecha,
+                    r.Disponibilidad,
+                })
+                .ToListAsync();
+
+            // Verificación si no hay resultados
+            if (!reservas.Any())
+            {
+                return NotFound("No se encontraron reservas");
+            }
+
+            return Ok(reservas);
+        }
+        [HttpGet("Reservas_Herr_Finalizada")]
+        public async Task<ActionResult<IEnumerable<Object>>> Get_Reservas_Inst_Fin()
+        {
+            return await _context.ReservasInstalaciones
+                .Include(r => r.Instalacion)
+                .Include(r => r.Usuario)
+                .Where(r => r.Disponibilidad == "Finalizada")
+                .Select(r => new
+                {
+                    r.ID,
+                    Usuario = r.Usuario.Nombre + ' ' + r.Usuario.Apellido,
+                    Instalacion = r.Instalacion.Nombre,
+                    r.Instalacion.Dia,
+                    r.Instalacion.HoraInicio,
+                    r.Instalacion.HoraFin,
+                    r.Fecha,
+                    r.Disponibilidad,
+                }).ToListAsync();
+        }
         private bool ReservacionHerramientaExists(int id)
         {
             return _context.ReservasHerramientas.Any(e => e.ID == id);
