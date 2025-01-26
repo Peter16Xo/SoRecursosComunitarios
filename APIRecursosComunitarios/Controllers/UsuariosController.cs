@@ -106,6 +106,30 @@ namespace APIRecursosComunitarios.Controllers
 
             return NoContent();
         }
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Usuario>>> SearchReportes(string? nombre, string? apellido,string? cedula)
+        {
+            var userQuery = _context.Usuarios.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(nombre))
+            {
+                userQuery = userQuery.Where(r => r.Nombre.Contains(nombre));
+            }
+            if (!string.IsNullOrWhiteSpace(apellido))
+            {
+                userQuery = userQuery.Where(r => r.Apellido.Contains(apellido));
+            }
+            if (!string.IsNullOrWhiteSpace(cedula))
+            {
+                userQuery=userQuery.Where(r=>r.Cedula.Contains(cedula));
+            }
+            var reporte = await userQuery.ToListAsync();
+            if (!reporte.Any())
+            {
+                return NotFound("No se encontraron reportes con ese criterio");
+            }
+            return Ok(reporte);
+        }
 
         // POST: api/Usuarios
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
