@@ -27,7 +27,11 @@ namespace APIRecursosComunitarios.Controllers
         {
             return await _context.Herramienta.ToListAsync();
         }
-
+        [HttpGet("Cantidad")]
+        public async Task<ActionResult<IEnumerable<Herramienta>>> GetHerramientaCantidad()
+        {
+            return await _context.Herramienta.Where(h=>h.Cantidad>0).ToListAsync();
+        }
         // GET: api/Herramientas/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Herramienta>> GetHerramienta(int id)
