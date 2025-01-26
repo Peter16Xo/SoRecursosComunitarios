@@ -127,6 +127,42 @@ namespace APIRecursosComunitarios.Controllers
             }
             return NoContent();
         }
+        //Search "buscar"
+        // GET: api/Instalacion/search
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Instalacion>>> SearchInstalaciones(string? nombre, string? tipo, string? descripcion, string? dia, string? disponibilidad)
+        {
+            var installQuery = _context.Instalacion.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(nombre))
+            {
+                installQuery = installQuery.Where(i => i.Nombre.Contains(nombre));
+            }
+            if (!string.IsNullOrWhiteSpace(tipo))
+            {
+                installQuery = installQuery.Where(i => i.Tipo.Contains(tipo));
+            }
+            if (!string.IsNullOrWhiteSpace(descripcion))
+            {
+                installQuery = installQuery.Where(i => i.Descripcion.Contains(descripcion));
+            }
+            if (!string.IsNullOrWhiteSpace(dia))
+            {
+                installQuery = installQuery.Where(i => i.Dia.Contains(dia));
+            }
+            if (!string.IsNullOrWhiteSpace(disponibilidad))
+            {
+                installQuery = installQuery.Where(i => i.Disponibilidad.Contains(disponibilidad));
+            }
+
+            var install = await installQuery.ToListAsync();
+            if (!install.Any())
+            {
+                return NotFound("No se encontraron instalaciones con ese criterio");
+            }
+            return Ok(install);
+        }
+
         private bool InstalacionExists(int id)
         {
             return _context.Instalacion.Any(e => e.ID == id);

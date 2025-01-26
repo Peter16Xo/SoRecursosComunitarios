@@ -129,6 +129,37 @@ namespace APIRecursosComunitarios.Controllers
             }
             return NoContent();
         }
+        //Search "buscar"
+        // GET: api/Herramientas/search
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Herramienta>>> SearchHerramientas(string? nombre, string? ubicacion, string? descripcion, string? disponibilidad)
+        {
+            var toolQuery = _context.Herramienta.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(nombre))
+            {
+                toolQuery = toolQuery.Where(t => t.Nombre.Contains(nombre));
+            }
+            if (!string.IsNullOrWhiteSpace(ubicacion))
+            {
+                toolQuery = toolQuery.Where(t => t.Ubicacion.Contains(ubicacion));
+            }
+            if (!string.IsNullOrWhiteSpace(descripcion))
+            {
+                toolQuery = toolQuery.Where(t => t.Descripcion.Contains(descripcion));
+            }
+            if (!string.IsNullOrWhiteSpace(disponibilidad))
+            {
+                toolQuery = toolQuery.Where(t => t.Disponibilidad.Contains(disponibilidad));
+            }
+
+            var tool = await toolQuery.ToListAsync();
+            if (!tool.Any())
+            {
+                return NotFound("No se encontraron herramientas con ese criterio");
+            }
+            return Ok(tool);
+        }
         private bool HerramientaExists(int id)
         {
             return _context.Herramienta.Any(e => e.ID == id);
