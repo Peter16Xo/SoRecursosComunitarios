@@ -99,7 +99,32 @@ namespace APIRecursosComunitarios.Controllers
 
             return NoContent();
         }
-
+        [HttpPut("desactive/{id}")]
+        public async Task<IActionResult> DesactiveHerramienta(int id)
+        {
+            var herramienta = await _context.Herramienta.FindAsync(id);
+            if (herramienta == null)
+            {
+                return NotFound("Instalacion no econtrado");
+            }
+            herramienta.Disponibilidad = "Ocupada";
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!HerramientaExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
         private bool HerramientaExists(int id)
         {
             return _context.Herramienta.Any(e => e.ID == id);

@@ -40,7 +40,7 @@ namespace APIRecursosComunitarios.Controllers
                 .Select(static r => new
                 {
                     r.ID,
-                    Usuario = r.Usuario.Nombre+' '+r.Usuario.Apellido,
+                    Usuario = r.Usuario.Nombre + ' ' + r.Usuario.Apellido,
                     Instalacion = r.Instalacion.Nombre,
                     r.Instalacion.Dia,
                     r.Instalacion.HoraInicio,
@@ -54,7 +54,10 @@ namespace APIRecursosComunitarios.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ReservacionInstalacion>> GetReservacionInstalacion(int id)
         {
-            var reservacionInstalacion = await _context.ReservasInstalaciones.FindAsync(id);
+            var reservacionInstalacion = await _context.ReservasInstalaciones
+                .Include(r => r.Instalacion) // Cargar la propiedad Instalacion
+                .Include(r => r.Usuario)     // Cargar la propiedad Usuario
+                .FirstOrDefaultAsync(r => r.ID == id); // Buscar la entidad por id
 
             if (reservacionInstalacion == null)
             {
@@ -63,7 +66,25 @@ namespace APIRecursosComunitarios.Controllers
 
             return reservacionInstalacion;
         }
-
+        [HttpGet("Reservas_Inst_Finalizada")]
+        public async Task<ActionResult<IEnumerable<Object>>> Get_Reservas_Inst_Fin()
+        {
+            return await _context.ReservasInstalaciones
+                .Include(r => r.Instalacion)
+                .Include(r => r.Usuario)
+                .Where(r => r.Disponibilidad == "Finalizada")
+                .Select(r => new
+                {
+                    r.ID,
+                    Usuario = r.Usuario.Nombre + ' ' + r.Usuario.Apellido,
+                    Instalacion = r.Instalacion.Nombre,
+                    r.Instalacion.Dia,
+                    r.Instalacion.HoraInicio,
+                    r.Instalacion.HoraFin,
+                    r.Fecha,
+                    r.Disponibilidad,
+                }).ToListAsync();
+        }
         // PUT: api/ReservacionInstalacions/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -94,7 +115,7 @@ namespace APIRecursosComunitarios.Controllers
 
             return NoContent();
         }
-
+        
         // POST: api/ReservacionInstalacions
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -121,6 +142,50 @@ namespace APIRecursosComunitarios.Controllers
 
             return NoContent();
         }
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<ReservacionInstalacion>>> SearchReservaInsta(string? nombre_apellido)
+        {
+            var reservaQuery = _context.ReservasInstalaciones
+                .Include(m => m.Usuario)
+                .Select(r => new
+                {
+                    r.ID,
+                    Usuario = r.Usuario.Nombre + " " + r.Usuario.Apellido,  // Concatenar el nombre y apellido
+                    Instalacion = r.Instalacion.Nombre,
+                    r.Instalacion.Dia,
+                    r.Instalacion.HoraInicio,
+                    r.Instalacion.HoraFin,
+                    r.Fecha,
+                    r.Disponibilidad,
+                })
+                .AsQueryable();
+
+            // Filtro por nombre y apellido si se proporciona
+            if (!string.IsNullOrEmpty(nombre_apellido))
+            {
+                reservaQuery = reservaQuery.Where(m =>
+                    (m.Usuario.Contains(nombre_apellido)));  // Esto busca en la concatenación de nombre y apellido
+            }
+
+            // Filtro por fecha si se proporciona
+            //if (fecha.HasValue)
+            //{
+            //    reservaQuery = reservaQuery.Where(m => m.Fecha == fecha.Value);  // Se usa fecha.Value para acceder al valor de DateOnly
+            //}
+
+            // Obtener los resultados
+            var reservas = await reservaQuery.ToListAsync();
+
+            // Verificar si no se encontraron reservas
+            if (!reservas.Any())
+            {
+                return NotFound("No se encuentran reservas");
+            }
+
+            // Retornar los resultados
+            return Ok(reservas);
+        }
+
 
         private bool ReservacionInstalacionExists(int id)
         {

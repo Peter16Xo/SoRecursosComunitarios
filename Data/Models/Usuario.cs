@@ -15,6 +15,7 @@ namespace Data.Models
         public string Apellido { get; set; }
         public string Correo { get; set; }
         public string Telefono { get; set; }
+        public char Active { get; set; } //Y-N
         [JsonIgnore]
         public virtual ICollection<ReservacionInstalacion> ReservacionInstalaciones { get; set; } = new List<ReservacionInstalacion>();
         [JsonIgnore]

@@ -17,8 +17,8 @@ namespace Data.Models
         public string HoraInicio { get; set; }
         public string HoraFin { get; set; }
         public string Disponibilidad { get; set; } // "Reservada", "Finalizada"
-        public virtual Herramienta Herramienta { get; set; }
-        public virtual Usuario Usuario { get; set; }
+        public virtual Herramienta? Herramienta { get; set; } = null;
+        public virtual Usuario? Usuario { get; set; }=null;
     }
 
 }

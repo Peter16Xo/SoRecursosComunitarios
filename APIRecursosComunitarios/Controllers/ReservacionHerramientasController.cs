@@ -54,7 +54,10 @@ namespace APIRecursosComunitarios.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ReservacionHerramienta>> GetReservacionHerramienta(int id)
         {
-            var reservacionHerramienta = await _context.ReservasHerramientas.FindAsync(id);
+            var reservacionHerramienta = await _context.ReservasHerramientas
+                .Include(r=>r.Herramienta)
+                .Include(r=>r.Usuario)
+                .FirstOrDefaultAsync();
 
             if (reservacionHerramienta == null)
             {

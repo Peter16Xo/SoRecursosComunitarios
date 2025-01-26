@@ -13,8 +13,8 @@ namespace Data.Models
         public int Instalacion_ID { get; set; }
         public DateOnly? Fecha { get; set; }
         public string Disponibilidad { get; set; } // "Reservada", "Finalizada"
-        public virtual Instalacion Instalacion { get; set; }
-        public virtual Usuario Usuario { get; set; }
+        public virtual Instalacion? Instalacion { get; set; } = null;
+        public virtual Usuario? Usuario { get; set; }=null;
     }
 }
  

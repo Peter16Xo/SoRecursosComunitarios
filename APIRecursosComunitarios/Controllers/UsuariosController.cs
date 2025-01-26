@@ -23,11 +23,45 @@ namespace APIRecursosComunitarios.Controllers
 
         // GET: api/Usuarios
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
+        public async Task<ActionResult<IEnumerable<Object>>> GetUsuarios()
         {
-            return await _context.Usuarios.ToListAsync();
+            return await _context.Usuarios
+                .Where(u=>u.Active=='Y')
+                .Select(static u => new
+                {
+                    u.Id,
+                    u.Nombre,
+                    u.Cedula,
+                    u.Apellido,
+                    u.Correo,
+                    u.Telefono
+                })
+                .ToListAsync();
         }
-
+        [HttpPut("desactive/{id}")]
+        public async Task<IActionResult>DesactiveUsuario(int id)
+        {
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario == null) {
+                return NotFound("Usuario no econtrado");
+            }
+            usuario.Active = 'N';
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException) {
+                if (!UsuarioExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
         // GET: api/Usuarios/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Usuario>> GetUsuario(int id)

@@ -41,7 +41,29 @@ namespace APIRecursosComunitarios.Controllers
 
             return reporte;
         }
+        //Search "buscar"
+        // GET: api/Reportes/search
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Reporte>>> SearchReportes(string? titulo, string? recursoafectado)
+        {
+            var reportQuery = _context.Reportes.AsQueryable();
 
+            if (!string.IsNullOrWhiteSpace(titulo))
+            {
+                reportQuery = reportQuery.Where(r => r.Titulo.Contains(titulo));
+            }
+            if (!string.IsNullOrWhiteSpace(recursoafectado))
+            {
+                reportQuery = reportQuery.Where(r => r.RecursoAfectado.Contains(recursoafectado));
+            }
+
+            var reporte = await reportQuery.ToListAsync();
+            if (!reporte.Any())
+            {
+                return NotFound("No se encontraron reportes con ese criterio");
+            }
+            return Ok(reporte);
+        }
         // PUT: api/Reportes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
