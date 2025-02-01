@@ -34,7 +34,8 @@ namespace APIRecursosComunitarios.Controllers
                     u.Cedula,
                     u.Apellido,
                     u.Correo,
-                    u.Telefono
+                    u.Telefono,
+                    u.Active,
                 })
                 .ToListAsync();
         }

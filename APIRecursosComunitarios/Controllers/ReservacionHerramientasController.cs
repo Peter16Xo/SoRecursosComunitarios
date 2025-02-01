@@ -224,19 +224,20 @@ namespace APIRecursosComunitarios.Controllers
         [HttpGet("Reservas_Herr_Finalizada")]
         public async Task<ActionResult<IEnumerable<Object>>> Get_Reservas_Inst_Fin()
         {
-            return await _context.ReservasInstalaciones
-                .Include(r => r.Instalacion)
+            return await _context.ReservasHerramientas
+                .Include(r => r.Herramienta)
                 .Include(r => r.Usuario)
                 .Where(r => r.Disponibilidad == "Finalizada")
                 .Select(r => new
                 {
                     r.ID,
                     Usuario = r.Usuario.Nombre + ' ' + r.Usuario.Apellido,
-                    Instalacion = r.Instalacion.Nombre,
-                    r.Instalacion.Dia,
-                    r.Instalacion.HoraInicio,
-                    r.Instalacion.HoraFin,
+                    Herramienta = r.Herramienta.Nombre,
+                    r.Herramienta.Descripcion,
+                    r.Dia,
                     r.Fecha,
+                    r.HoraInicio,
+                    r.HoraFin,
                     r.Disponibilidad,
                 }).ToListAsync();
         }
