@@ -125,7 +125,7 @@ namespace APIRecursosComunitarios.Controllers
             return NoContent();
         }
         [HttpGet("search")]
-        public async Task<ActionResult<IEnumerable<ReservacionHerramienta>>> SearchReservaHerr(string? nombre, string? apellido, string? instalacion)
+        public async Task<ActionResult<IEnumerable<ReservacionHerramienta>>> SearchReservaHerr(string? nombre, string? apellido, string? herramienta)
         {
             var reservaQuery = _context.ReservasHerramientas
                 .Include(r => r.Usuario)
@@ -143,10 +143,10 @@ namespace APIRecursosComunitarios.Controllers
                 reservaQuery = reservaQuery.Where(r =>
                 r.Usuario.Apellido.Contains(apellido));
             }
-            if (!string.IsNullOrEmpty(instalacion))
+            if (!string.IsNullOrEmpty(herramienta))
             {
                 reservaQuery = reservaQuery.Where(r =>
-                r.Herramienta.Nombre.Contains(instalacion));
+                r.Herramienta.Nombre.Contains(herramienta));
             }
 
             // Proyección de los datos
@@ -155,7 +155,7 @@ namespace APIRecursosComunitarios.Controllers
                 {
                     r.ID,
                     Usuario = r.Usuario.Nombre + " " + r.Usuario.Apellido,
-                    Instalacion = r.Herramienta.Nombre,
+                    Herramienta = r.Herramienta.Nombre,
                     r.Dia,
                     r.HoraInicio,
                     r.HoraFin,
@@ -204,7 +204,7 @@ namespace APIRecursosComunitarios.Controllers
                 {
                     r.ID,
                     Usuario = r.Usuario.Nombre + " " + r.Usuario.Apellido,
-                    Instalacion = r.Herramienta.Nombre,
+                    Herramienta = r.Herramienta.Nombre,
                     r.Dia,
                     r.HoraInicio,
                     r.HoraFin,
