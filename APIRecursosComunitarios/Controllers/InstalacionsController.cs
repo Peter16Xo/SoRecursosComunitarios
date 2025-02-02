@@ -25,11 +25,16 @@ namespace APIRecursosComunitarios.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Instalacion>>> GetInstalacion()
         {
-            return await _context.Instalacion
-                .Where(i=>i.Disponibilidad=="Disponible")
+            return await _context.Instalacion.Where(i => i.Disponibilidad == "Disponible" || i.Disponibilidad == "Ocupada")
                 .ToListAsync();
         }
-
+        [HttpGet("disponible")]
+        public async Task<ActionResult<IEnumerable<Instalacion>>>GetInstalacion_Dispo()
+        {
+            return await _context.Instalacion
+               .Where(i => i.Disponibilidad == "Disponible")
+               .ToListAsync();
+        }
         // GET: api/Instalacions/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Instalacion>> GetInstalacion(int id)
@@ -74,7 +79,58 @@ namespace APIRecursosComunitarios.Controllers
 
             return NoContent();
         }
-  
+        [HttpPut("desactive/{id}")]
+        public async Task<IActionResult> DesactiveInstalacion(int id)
+        {
+            var instalacion = await _context.Instalacion.FindAsync(id);
+            if (instalacion == null)
+            {
+                return NotFound("Instalacion no econtrado");
+            }
+            instalacion.Disponibilidad = "Ocupada";
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!InstalacionExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
+        [HttpPut("active/{id}")]
+        public async Task<IActionResult> ActiveInstalacion(int id)
+        {
+            var instalacion = await _context.Instalacion.FindAsync(id);
+            if (instalacion == null)
+            {
+                return NotFound("Instalacion no econtrado");
+            }
+            instalacion.Disponibilidad = "Disponible";
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!InstalacionExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
         // POST: api/Instalacions
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -99,32 +155,6 @@ namespace APIRecursosComunitarios.Controllers
             _context.Instalacion.Remove(instalacion);
             await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
-        [HttpPut("desactive/{id}")]
-        public async Task<IActionResult> DesactiveInstalacion(int id)
-        {
-            var usuario = await _context.Instalacion.FindAsync(id);
-            if (usuario == null)
-            {
-                return NotFound("Instalacion no econtrado");
-            }
-            usuario.Disponibilidad = "Ocupada";
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!InstalacionExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
             return NoContent();
         }
         //Search "buscar"

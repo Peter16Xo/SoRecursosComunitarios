@@ -103,13 +103,59 @@ namespace APIRecursosComunitarios.Controllers
 
             return NoContent();
         }
+        [HttpPut("aumentar_cantidad{id}")]
+        public async Task<IActionResult>aumentarCantidad(int id){
+            var herramienta = await _context.Herramienta.FindAsync(id);
+            if (herramienta == null)
+            {
+                return NotFound("Herramienta no econtrado");
+            }
+            herramienta.Cantidad = herramienta.Cantidad + 1;
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!HerramientaExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
+        [HttpPut("menor_cantidad{id}")]
+        public async Task<IActionResult>menorCantidad(int id){
+            var herramienta = await _context.Herramienta.FindAsync(id);
+            if(herramienta == null){
+                return NotFound("Herramienta no econtrado");
+            }
+            herramienta.Cantidad = herramienta.Cantidad - 1;
+            try{
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException){
+                if (!HerramientaExists(id)){
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
         [HttpPut("desactive/{id}")]
         public async Task<IActionResult> DesactiveHerramienta(int id)
         {
             var herramienta = await _context.Herramienta.FindAsync(id);
             if (herramienta == null)
             {
-                return NotFound("Instalacion no econtrado");
+                return NotFound("Herramienta no econtrado");
             }
             herramienta.Disponibilidad = "Ocupada";
             try

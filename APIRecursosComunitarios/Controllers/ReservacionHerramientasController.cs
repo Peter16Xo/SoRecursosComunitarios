@@ -36,12 +36,12 @@ namespace APIRecursosComunitarios.Controllers
             return await _context.ReservasHerramientas
                 .Include(r => r.Herramienta)
                 .Include(r => r.Usuario)
+                .Where(r=>r.Disponibilidad=="Reservada")
                 .Select(static r => new
                 {
                     r.ID,
                     Usuario = r.Usuario.Nombre + ' ' + r.Usuario.Apellido,
                     Herramienta = r.Herramienta.Nombre,
-                    r.Herramienta.Descripcion,
                     r.Dia,
                     r.Fecha,
                     r.HoraInicio,
@@ -57,7 +57,7 @@ namespace APIRecursosComunitarios.Controllers
             var reservacionHerramienta = await _context.ReservasHerramientas
                 .Include(r=>r.Herramienta)
                 .Include(r=>r.Usuario)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(r=>r.ID==id);
 
             if (reservacionHerramienta == null)
             {
@@ -233,13 +233,38 @@ namespace APIRecursosComunitarios.Controllers
                     r.ID,
                     Usuario = r.Usuario.Nombre + ' ' + r.Usuario.Apellido,
                     Herramienta = r.Herramienta.Nombre,
-                    r.Herramienta.Descripcion,
                     r.Dia,
                     r.Fecha,
                     r.HoraInicio,
                     r.HoraFin,
                     r.Disponibilidad,
                 }).ToListAsync();
+        }
+        [HttpPut("desactive/{id}")]
+        public async Task<IActionResult> DesactiveReserva_H(int id)
+        {
+            var reserva = await _context.ReservasHerramientas.FirstAsync();
+            if (reserva == null)
+            {
+                return NotFound("Reserva no encontrada");
+            }
+            reserva.Disponibilidad = "Finalizada";
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (ReservacionHerramientaExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
         }
         private bool ReservacionHerramientaExists(int id)
         {

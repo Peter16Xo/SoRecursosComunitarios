@@ -47,7 +47,7 @@ namespace APIRecursosComunitarios.Controllers
                     r.Instalacion.HoraFin,
                     r.Fecha,
                     r.Disponibilidad,
-                })
+                }).Where(r=>r.Disponibilidad=="Reservada")
                 .ToListAsync();
         }
         // GET: api/ReservacionInstalacions/5
@@ -83,7 +83,8 @@ namespace APIRecursosComunitarios.Controllers
                     r.Instalacion.HoraFin,
                     r.Fecha,
                     r.Disponibilidad,
-                }).ToListAsync();
+                }).Where(r=>r.Disponibilidad=="Finalizada")
+                .ToListAsync();
         }
         // PUT: api/ReservacionInstalacions/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -237,7 +238,32 @@ namespace APIRecursosComunitarios.Controllers
 
             return Ok(reservas);
         }
-
+        [HttpPut("desactive/{id}")]
+        public async Task<IActionResult>DesactiveReserva(int id)
+        {
+            var reserva = await _context.ReservasInstalaciones.FirstAsync();
+            if(reserva == null)
+            {
+                return NotFound("Reserva no encontrada");
+            }
+            reserva.Disponibilidad = "Finalizada";
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (ReservacionInstalacionExists(id)) 
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
         private bool ReservacionInstalacionExists(int id)
         {
             return _context.ReservasInstalaciones.Any(e => e.ID == id);
